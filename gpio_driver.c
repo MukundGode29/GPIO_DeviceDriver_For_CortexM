@@ -13,30 +13,30 @@
 * @brief   Configure the mode of a pin : input, 
 	*/
 	
-static void hal_gpio_configure_pin_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t mode)
+static void hal_gpio_configure_pin_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t mode)
 {
 	GPIOx->MODER |= (mode << (2 * pin_no));
 
 }
 
-static void hal_gpio_configure_op_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t mode)
+static void hal_gpio_configure_op_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t mode)
 {
   GPIOx->OTYPER |= (mode << pin_no);	
 
 }
 
-static void hal_gpio_configure_speed_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t mode)
+static void hal_gpio_configure_speed_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t mode)
 {
   GPIOx->OSPEEDR |= (mode << (2 * pin_no));
 }
 
-static void hal_gpio_configure_pupd_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t pupd)
+static void hal_gpio_configure_pupd_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t pupd)
 {
  GPIOx->PUPDR  |= (pupd << (2 * pin_no));
 	
 }
 
-static void hal_gpio_configure_pin_alternate_function(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t alt_fun)
+static void hal_gpio_configure_pin_alternate_function(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t alt_fun)
 {
  if(pin_no <= 7)
  {
@@ -53,7 +53,14 @@ static void hal_gpio_configure_pin_alternate_function(GPIO_TypeDef *GPIOx, uint1
 
 /************************************************************************************/
 
-
+void hal_gpio_init(GPIO_TypeDef *GPIOx, gpio_pin_conf_t *gpio_pin_conf)
+{
+	hal_gpio_configure_pin_mode(GPIOx, gpio_pin_conf->pin, gpio_pin_conf->mode);
+  hal_gpio_configure_op_mode(GPIOx, gpio_pin_conf->pin, gpio_pin_conf->op_type);
+	hal_gpio_configure_pupd_mode(GPIOx, gpio_pin_conf->pin, gpio_pin_conf->pull);
+	hal_gpio_configure_speed_mode(GPIOx, gpio_pin_conf->pin, gpio_pin_conf->speed);
+	hal_gpio_configure_pin_alternate_function(GPIOx, gpio_pin_conf->pin, gpio_pin_conf->alternate);
+}
 
 uint8_t hal_gpio_read_pin(GPIO_TypeDef *GPIOx, uint16_t pin_no)
 {

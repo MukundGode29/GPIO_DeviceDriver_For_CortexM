@@ -13,7 +13,7 @@
 
 #define GPIO_PIN_INPUT_MODE                    ((uint32_t)0x00)
 #define GPIO_PIN_OUTPUT_MODE                   ((uint32_t)0x01)
-#define GPIO_PIN_ALTERNATE_FUNCTION_MODE      ((uint32_t)0x02)
+#define GPIO_PIN_ALTERNATE_FUNCTION_MODE       ((uint32_t)0x02)
 
 //GPIO output type setting
 #define GPIO_PIN_OUTPUT_PULLUP                 ((uint32_t)0x00)
@@ -100,15 +100,17 @@ typedef enum
 
 
  
-static void hal_gpio_configure_pin_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t mode);
+static void hal_gpio_configure_pin_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t mode);
 
-static void hal_gpio_configure_op_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t mode);
+static void hal_gpio_configure_op_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t mode);
 
-static void hal_gpio_configure_speed_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t mode);
+static void hal_gpio_configure_speed_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t mode);
 
-static void hal_gpio_configure_pupd_mode(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t pupd);
+static void hal_gpio_configure_pupd_mode(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t pupd);
 
-static void hal_gpio_configure_pin_alternate_function(GPIO_TypeDef *GPIOx, uint16_t pin_no, uint32_t alt_fun);
+static void hal_gpio_configure_pin_alternate_function(GPIO_TypeDef *GPIOx, uint32_t pin_no, uint32_t alt_fun);
+
+void hal_gpio_init(GPIO_TypeDef *GPIOx, gpio_pin_conf_t *gpio_pin_conf);
 
 uint8_t hal_gpio_read_pin(GPIO_TypeDef *GPIOx, uint16_t pin_no);
 
